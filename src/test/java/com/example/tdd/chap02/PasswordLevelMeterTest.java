@@ -35,4 +35,10 @@ public class PasswordLevelMeterTest {
         Assertions.assertThat(result2).isEqualTo(PasswordStrength.NORMAL);
     }
 
+    @Test
+    void validateNormalPasswordWithTwoCriteriaExcludingNumber() {
+        PasswordLevelMeter meter = new PasswordLevelMeter();
+        PasswordStrength result = meter.evaluatePassword("ab!@ABqwer");
+        Assertions.assertThat(result).isEqualTo(PasswordStrength.NORMAL);
+    }
 }
