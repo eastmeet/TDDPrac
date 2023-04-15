@@ -27,12 +27,12 @@ public class PasswordLevelMeterTest {
     }
 
     @Test
-    void validateNormalPasswordWithTwoCriteria() {
+    void validateNormalPasswordWithTwoCriteriaExcludingLength() {
         PasswordLevelMeter meter = new PasswordLevelMeter();
         PasswordStrength result = meter.evaluatePassword("ab12!@A");
         Assertions.assertThat(result).isEqualTo(PasswordStrength.NORMAL);
         PasswordStrength result2 = meter.evaluatePassword("AB12!c");
         Assertions.assertThat(result2).isEqualTo(PasswordStrength.NORMAL);
-
     }
+
 }
