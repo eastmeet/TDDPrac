@@ -18,12 +18,21 @@ public class PasswordLevelMeterTest {
     @Test
     void validateStrongPasswordWithAllCriteria() {
         PasswordLevelMeter meter = new PasswordLevelMeter();
-        String password = "ab12!@AB";
-        PasswordStrength result = meter.evaluatePassword(password);
+        PasswordStrength result = meter.evaluatePassword("ab12!@AB");
         Assertions.assertThat(result).isEqualTo(PasswordStrength.STRONG);
 
         PasswordStrength result2 = meter.evaluatePassword("abc1!Add");
         Assertions.assertThat(result2).isEqualTo(PasswordStrength.STRONG);
+
+    }
+
+    @Test
+    void validateNormalPasswordWithTwoCriteria() {
+        PasswordLevelMeter meter = new PasswordLevelMeter();
+        PasswordStrength result = meter.evaluatePassword("ab12!@A");
+        Assertions.assertThat(result).isEqualTo(PasswordStrength.NORMAL);
+        PasswordStrength result2 = meter.evaluatePassword("AB12!c");
+        Assertions.assertThat(result2).isEqualTo(PasswordStrength.NORMAL);
 
     }
 }
