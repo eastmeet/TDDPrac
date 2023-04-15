@@ -14,31 +14,31 @@ import org.junit.jupiter.api.Test;
  * 2가지 ->
  * 1가지
  */
+
 public class PasswordLevelMeterTest {
+
+    private PasswordLevelMeter meter = new PasswordLevelMeter();
+
+    private void assertStrength(String password, PasswordStrength expStr) {
+        PasswordStrength result = meter.evaluatePassword(password);
+        Assertions.assertThat(result).isEqualTo(expStr);
+    }
+
     @Test
     void validateStrongPasswordWithAllCriteria() {
-        PasswordLevelMeter meter = new PasswordLevelMeter();
-        PasswordStrength result = meter.evaluatePassword("ab12!@AB");
-        Assertions.assertThat(result).isEqualTo(PasswordStrength.STRONG);
-
-        PasswordStrength result2 = meter.evaluatePassword("abc1!Add");
-        Assertions.assertThat(result2).isEqualTo(PasswordStrength.STRONG);
+        assertStrength("ab12!@AB", PasswordStrength.STRONG);
+        assertStrength("abc1!Add", PasswordStrength.STRONG);
 
     }
 
     @Test
     void validateNormalPasswordWithTwoCriteriaExcludingLength() {
-        PasswordLevelMeter meter = new PasswordLevelMeter();
-        PasswordStrength result = meter.evaluatePassword("ab12!@A");
-        Assertions.assertThat(result).isEqualTo(PasswordStrength.NORMAL);
-        PasswordStrength result2 = meter.evaluatePassword("AB12!c");
-        Assertions.assertThat(result2).isEqualTo(PasswordStrength.NORMAL);
+        assertStrength("ab12!@A", PasswordStrength.NORMAL);
+        assertStrength("AB12!c", PasswordStrength.NORMAL);
     }
 
     @Test
     void validateNormalPasswordWithTwoCriteriaExcludingNumber() {
-        PasswordLevelMeter meter = new PasswordLevelMeter();
-        PasswordStrength result = meter.evaluatePassword("ab!@ABqwer");
-        Assertions.assertThat(result).isEqualTo(PasswordStrength.NORMAL);
+        assertStrength("ab!@ABqwer", PasswordStrength.NORMAL);
     }
 }
