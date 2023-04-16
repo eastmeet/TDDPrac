@@ -3,13 +3,10 @@ package com.example.tdd.chap02;
 
 /**
  * ==== 검사할 규칙 ====
- * 길이가 8글자 이상
+ * password length >= 8
  * 0부터 9사이의 숫자를 포함
  * 대문자 포함
- * ==== 조건 충족 시====
- * 3가지 -> STRONG
- * 2가지 -> NORMAL
- * 1가지 -> WEAK
+ * matchCount : 3 -> STRONG, 2 -> NORMAL, 1 -> WEAK
  */
 public class PasswordLevelMeter {
     public PasswordStrength evaluatePassword(String password) {
@@ -17,29 +14,35 @@ public class PasswordLevelMeter {
             return PasswordStrength.INVALID;
         }
 
-        int metCount = 0;
+        int matchCount = getMatchingCountByConditions(password);
 
-        if (password.length() >= 8) {
-            metCount++;
-        }
-
-        if (isContainsNum(password)) {
-            metCount++;
-        }
-
-        if (isContainUPP(password)) {
-            metCount++;
-        }
-
-        if (metCount <= 1) {
+        if (matchCount <= 1) {
             return PasswordStrength.WEAK;
         }
 
-        if (metCount == 2) {
+        if (matchCount == 2) {
             return PasswordStrength.NORMAL;
         }
 
         return PasswordStrength.STRONG;
+    }
+
+    private static int getMatchingCountByConditions(String password) {
+        int matchCount = 0;
+
+        if (password.length() >= 8) {
+            matchCount++;
+        }
+
+        if (isContainsNum(password)) {
+            matchCount++;
+        }
+
+        if (isContainUPP(password)) {
+            matchCount++;
+        }
+
+        return matchCount;
     }
 
     private static boolean isContainUPP(String password) {
