@@ -48,7 +48,13 @@ public class PasswordLevelMeterTest {
     }
 
     @Test
-    void validateWeakPasswordWithNumberLength() {
+    void validateWeakPasswordWithOnlyPasswordLength() {
         assertStrength("abdefghi", PasswordStrength.WEAK);
     }
+
+    @Test
+    void validateWeakPasswordWithOnlyNumber() {
+        assertStrength("12345", PasswordStrength.WEAK);
+    }
+
 }
