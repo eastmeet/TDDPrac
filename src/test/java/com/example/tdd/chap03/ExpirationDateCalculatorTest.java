@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * 서비스를 사용하려면 매달 1만원을 선불 납부
  * 납부일 기준 한달 뒤가 서비스 만료일
@@ -34,6 +36,7 @@ public class ExpirationDateCalculatorTest {
         ExpirationDateCalculator cal = new ExpirationDateCalculator();
         LocalDate expirationDate = cal.calculateExp(payData);
 
+//        assertEquals(expectedExpiryDate, expirationDate );
         Assertions.assertThat(expirationDate).isEqualTo(expectedExpiryDate);
     }
 
@@ -97,7 +100,7 @@ public class ExpirationDateCalculatorTest {
                 .payAmount(10_000)
                 .build();
 
-        assertExpirationDate(payData1, LocalDate.of(2019,3, 30));
+        assertExpirationDate(payData1, LocalDate.of(2019, 3, 30));
 
         PayData payData2 = PayData.builder()
                 .firstBillingDate(LocalDate.of(2019, 5, 31))
@@ -106,6 +109,48 @@ public class ExpirationDateCalculatorTest {
                 .build();
 
         assertExpirationDate(payData2, LocalDate.of(2019, 7, 31));
+    }
+
+    @Test
+    void calcExpirationDateWithPayAmount() {
+        assertExpirationDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 3, 1))
+                        .payAmount(20_000)
+                        .build(),
+                LocalDate.of(2019, 5, 1)
+        );
+
+        assertExpirationDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 3, 1))
+                        .payAmount(30_000)
+                        .build(),
+                LocalDate.of(2019, 6, 1)
+        );
+
+    }
+
+    @Test
+    void firstBillingDateNotEqualToExpirationDateAndVariablePayAmount() {
+        assertExpirationDate(
+                PayData.builder()
+                        .firstBillingDate(LocalDate.of(2019, 1, 31))
+                        .billingDate(LocalDate.of(2019, 2, 28))
+                        .payAmount(20_000)
+                        .build(),
+                LocalDate.of(2019, 4, 30)
+        );
+
+        assertExpirationDate(
+                PayData.builder().
+                        firstBillingDate(LocalDate.of(2019, 3, 31))
+                        .billingDate(LocalDate.of(2019, 4, 30))
+                        .payAmount(30_000)
+                        .build(),
+                LocalDate.of(2019, 7, 31)
+        );
+
     }
 
 }
