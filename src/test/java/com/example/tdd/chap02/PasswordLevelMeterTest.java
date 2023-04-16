@@ -51,4 +51,9 @@ public class PasswordLevelMeterTest {
     void emptyInput() {
         assertStrength("", PasswordStrength.INVALID);
     }
+
+    @Test
+    void validateNormalPasswordWithTwoCriteriaExcludingUpperCase() {
+        assertStrength("ab12!@df", PasswordStrength.NORMAL);
+    }
 }
