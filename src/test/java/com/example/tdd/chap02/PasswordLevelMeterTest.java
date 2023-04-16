@@ -61,4 +61,9 @@ public class PasswordLevelMeterTest {
     void validateWeakPasswordWithOnlyUpperCondition() {
         assertStrength("ABCDE", PasswordStrength.WEAK);
     }
+
+    @Test
+    void meetsNoCondition() {
+        assertStrength("abc", PasswordStrength.WEAK);
+    }
 }

@@ -31,7 +31,7 @@ public class PasswordLevelMeter {
             metCount++;
         }
 
-        if (metCount == 1) {
+        if (metCount <= 1) {
             return PasswordStrength.WEAK;
         }
 
