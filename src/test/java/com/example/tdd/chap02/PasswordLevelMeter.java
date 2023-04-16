@@ -17,31 +17,25 @@ public class PasswordLevelMeter {
             return PasswordStrength.INVALID;
         }
 
-        boolean lengthEnough = password.length() >= 8;
-        boolean containsNum = isContainsNum(password);
-        boolean containUPP = isContainUPP(password);
+        int metCount = 0;
 
-        if (lengthEnough && !containsNum && !containUPP) {
+        if (password.length() >= 8) {
+            metCount++;
+        }
+
+        if (isContainsNum(password)) {
+            metCount++;
+        }
+
+        if (isContainUPP(password)) {
+            metCount++;
+        }
+
+        if (metCount == 1) {
             return PasswordStrength.WEAK;
         }
 
-        if (!lengthEnough && containsNum && !containUPP) {
-            return PasswordStrength.WEAK;
-        }
-
-        if (!lengthEnough && !containsNum && containUPP) {
-            return PasswordStrength.WEAK;
-        }
-
-        if (!lengthEnough) {
-            return PasswordStrength.NORMAL;
-        }
-
-        if (!containsNum) {
-            return PasswordStrength.NORMAL;
-        }
-
-        if (!containUPP) {
+        if (metCount == 2) {
             return PasswordStrength.NORMAL;
         }
 
