@@ -1,22 +1,37 @@
 package com.example.tdd.chap02;
 
+
+/**
+ * ==== 검사할 규칙 ====
+ * 길이가 8글자 이상
+ * 0부터 9사이의 숫자를 포함
+ * 대문자 포함
+ * ==== 조건 충족 시====
+ * 3가지 -> STRONG
+ * 2가지 -> NORMAL
+ * 1가지 -> WEAK
+ */
 public class PasswordLevelMeter {
     public PasswordStrength evaluatePassword(String password) {
         if (password == null || password.isEmpty()) {
             return PasswordStrength.INVALID;
         }
 
-        if (password.length() < 8) {
-            return PasswordStrength.NORMAL;
+        boolean lengthEnough = password.length() >= 8;
+        boolean containsNum = isContainsNum(password);
+        boolean containUPP = isContainUPP(password);
+
+        if (lengthEnough && !containsNum && !containUPP) {
+            return PasswordStrength.WEAK;
         }
 
-        boolean containsNum = isContainsNum(password);
+        if (!lengthEnough) {
+            return PasswordStrength.NORMAL;
+        }
 
         if (!containsNum) {
             return PasswordStrength.NORMAL;
         }
-
-        boolean containUPP = isContainUPP(password);
 
         if (!containUPP) {
             return PasswordStrength.NORMAL;
