@@ -41,4 +41,14 @@ public class PasswordLevelMeterTest {
     void validateNormalPasswordWithTwoCriteriaExcludingNumber() {
         assertStrength("ab!@ABqwer", PasswordStrength.NORMAL);
     }
+
+    @Test
+    void nullInput() {
+        assertStrength(null, PasswordStrength.INVALID);
+    }
+
+    @Test
+    void emptyInput() {
+        assertStrength("", PasswordStrength.INVALID);
+    }
 }
