@@ -153,4 +153,29 @@ public class ExpirationDateCalculatorTest {
 
     }
 
+    @Test
+    void offerOneYearService() {
+        assertExpirationDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 1, 28))
+                        .payAmount(100_000)
+                        .build(),
+                LocalDate.of(2020, 1, 28));
+
+        assertExpirationDate(PayData.builder()
+                        .billingDate(LocalDate.of(2020, 2, 29))
+                        .payAmount(100_000)
+                        .build(),
+                LocalDate.of(2021, 2, 28));
+
+        assertExpirationDate(PayData.builder()
+                        .billingDate(LocalDate.of(2020, 3, 1))
+                        .payAmount(130_000)
+                        .build(),
+                LocalDate.of(2021, 6, 1));
+
+    }
+
+
+
 }
