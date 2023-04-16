@@ -2,7 +2,7 @@ package com.example.tdd.chap02;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
+import org.springframework.boot.test.autoconfigure.filter.TypeExcludeFilters;
 
 
 public class PasswordLevelMeterTest {
@@ -57,4 +57,8 @@ public class PasswordLevelMeterTest {
         assertStrength("12345", PasswordStrength.WEAK);
     }
 
+    @Test
+    void validateWeakPasswordWithOnlyUpperCondition() {
+        assertStrength("ABCDE", PasswordStrength.WEAK);
+    }
 }
