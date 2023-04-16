@@ -1,6 +1,7 @@
 package com.example.tdd.chap03;
 
 
+import net.bytebuddy.asm.Advice;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +21,12 @@ public class ExpirationDateCalculatorTest {
         int payAmount = 10_000;
         LocalDate expectedExpiryDate = LocalDate.of(2019, 4, 1);
 
-        assertExpirationDate(new PayData(billingDate, payAmount), expectedExpiryDate);
+        assertExpirationDate(new PayData(null, billingDate, payAmount), expectedExpiryDate);
 
         LocalDate billingDate1 = LocalDate.of(2019, 5, 1);
         int payAmount1 = 10_000;
 
-        assertExpirationDate(new PayData(billingDate1, payAmount1), LocalDate.of(2019, 6, 1));
+        assertExpirationDate(new PayData(null, billingDate1, payAmount1), LocalDate.of(2019, 6, 1));
 
     }
 
@@ -78,6 +79,33 @@ public class ExpirationDateCalculatorTest {
                 LocalDate.of(2020, 2, 29)
         );
 
+    }
+
+    @Test
+    void firstBillingDateNotEqualToExpirationDate() {
+        PayData payData = PayData.builder()
+                .firstBillingDate(LocalDate.of(2019, 1, 31))
+                .billingDate(LocalDate.of(2019, 2, 28))
+                .payAmount(10_000)
+                .build();
+
+        assertExpirationDate(payData, LocalDate.of(2019, 3, 31));
+
+        PayData payData1 = PayData.builder()
+                .firstBillingDate(LocalDate.of(2019, 1, 30))
+                .billingDate(LocalDate.of(2019, 2, 28))
+                .payAmount(10_000)
+                .build();
+
+        assertExpirationDate(payData1, LocalDate.of(2019,3, 30));
+
+        PayData payData2 = PayData.builder()
+                .firstBillingDate(LocalDate.of(2019, 5, 31))
+                .billingDate(LocalDate.of(2019, 6, 30))
+                .payAmount(10_000)
+                .build();
+
+        assertExpirationDate(payData2, LocalDate.of(2019, 7, 31));
     }
 
 }
