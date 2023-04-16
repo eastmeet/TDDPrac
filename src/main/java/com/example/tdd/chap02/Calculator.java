@@ -1,5 +1,9 @@
 package com.example.tdd.chap02;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
 public class Calculator {
 
     /**

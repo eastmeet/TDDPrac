@@ -1,27 +1,20 @@
 package com.example.tdd.chap03;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@Getter
+@NoArgsConstructor
 public class PayData {
     private LocalDate billingDate;
     private int payAmount;
     private LocalDate expectedExpiryDate;
 
-    public PayData() {
-    }
-
-
     public PayData(LocalDate billingDate, int payAmount) {
         this.billingDate = billingDate;
         this.payAmount = payAmount;
-    }
-
-    public LocalDate getBillingDate() {
-        return billingDate;
-    }
-
-    public int getPayAmount() {
-        return payAmount;
     }
 
     public static Builder builder() {
@@ -44,7 +37,6 @@ public class PayData {
         public PayData build() {
             return data;
         }
-
     }
 }
 

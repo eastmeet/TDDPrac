@@ -20,18 +20,17 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // junit5 추가
-    testImplementation('org.junit.jupiter:junit-jupiter:5.5.0')
+    /* lombok */
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok' // for test
+    testImplementation 'org.projectlombok:lombok' // for test
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-    testLoggin {
-        events "passed", "skipped", "failed"
-    }
 }

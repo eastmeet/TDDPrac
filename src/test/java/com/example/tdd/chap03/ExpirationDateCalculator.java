@@ -7,4 +7,9 @@ class ExpirationDateCalculator {
         return payData.getBillingDate().plusMonths(1);
     }
 
+    public LocalDate calculateExp1(PayData1 payData1) {
+        return payData1.getBillingDate1().plusMonths(1);
+    }
+
+
 }

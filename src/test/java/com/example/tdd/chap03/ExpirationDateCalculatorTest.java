@@ -36,6 +36,14 @@ public class ExpirationDateCalculatorTest {
         Assertions.assertThat(expirationDate).isEqualTo(expectedExpiryDate);
     }
 
+    private void assertExpirationDate1(PayData1 payData1, LocalDate expectedExpiryDate) {
+        ExpirationDateCalculator cal = new ExpirationDateCalculator();
+        LocalDate expirationDate = cal.calculateExp1(payData1);
+
+        Assertions.assertThat(expirationDate).isEqualTo(expectedExpiryDate);
+    }
+
+
     @Test
     void handleException() {
         assertExpirationDate(
@@ -58,6 +66,14 @@ public class ExpirationDateCalculatorTest {
                 PayData.builder()
                         .billingDate(LocalDate.of(2020, 1, 31))
                         .payAmount(10_000)
+                        .build(),
+                LocalDate.of(2020, 2, 29)
+        );
+
+        assertExpirationDate1(
+                PayData1.builder()
+                        .billingDate1(LocalDate.of(2020, 1, 31))
+                        .payAmount1(10_000)
                         .build(),
                 LocalDate.of(2020, 2, 29)
         );
